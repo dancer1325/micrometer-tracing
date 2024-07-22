@@ -1,66 +1,95 @@
 = Glossary
 
-Micrometer Tracing contains a core module with an instrumentation https://en.wikipedia.org/wiki/Service_provider_interface[SPI], a set of modules containing bridges to various tracers, a set of modules containing dedicated span reporting mechanisms, and a test kit.
-You need to understand the following definitions for distributed tracing:
+* Micrometer Tracing
+    ** == core module + set of modules +  another set of modules
+        *** core module / has an instrumentation https://en.wikipedia.org/wiki/Service_provider_interface[SPI]
+        *** set of modules / has bridges to various tracers
+        *** another set of modules / has dedicated span reporting mechanisms & a test kit
+    ** terminology -- borrowed from -- https://research.google.com/pubs/pub36356.html[Dapper's] terminology.
 
-Micrometer Tracing borrows https://research.google.com/pubs/pub36356.html[Dapper's] terminology.
+* *Span*
+    ** := basic unit of work
+        *** _Example1:_ sending an RPC == new span,
+        *** __Example2:__ sending a response to an RPC == new span
+        ** contain other data
+            *** descriptions
+            *** timestamped events
+            *** key-value annotations (tags)
+            *** ID of the span / caused them
+            *** process IDs (normally IP addresses)
+        ** can be
+            *** started
+                **** once you create & start -> you must stop | some point in the future
+            *** stopped
+        ** uses
+            *** keep track of their timing information
+    ** _Example:_ parent-child relationships of spans
 
-*Span*: The basic unit of work.
-For example, sending an RPC is a new span, as is sending a response to an RPC.
-Spans also have other data, such as descriptions, timestamped events, key-value annotations (tags), the ID of the span that caused them, and process IDs (normally IP addresses).
+image::tracing/parents.jpg[Parent child relationship]
 
-Spans can be started and stopped, and they keep track of their timing information.
-Once you create a span, you must stop it at some point in the future.
+* *Trace*
+    ** := set of spans / tree-like structure
+        *** Example: if you run a distributed big-data store -> trace -- might be formed by a -- `PUT` request
+    ** _Example:_ *Span* and *Trace* | system
+        *** different color / span
+            **** [*A*, *G*]
+        *** comprehend each note
+            **** _Example1_
 
-*Trace*: A set of spans forming a tree-like structure.
-For example, if you run a distributed big-data store, a trace might be formed by a `PUT` request.
+                Trace Id = X
+                Span Id = D
+                Client Sent
 
-*Annotation/Event*: Used to record the existence of an event in time.
+                ***** span with `TraceId=X`, and `spanId=D`
+                ***** `Client Sent` event took place -- from -- RPC perspective
+            **** _Example2_
 
-*Tracer*: A library that handles the lifecycle of a span.
-It can create, start, stop, and report spans to an external system via reporters / exporters.
+                Trace Id = X
+                Span Id = A
+                (no custom span)
 
-*Tracing context*: For distributed tracing to work, the tracing context (trace identifier, span identifier, and so on) must be propagated through the process (for example, over threads) and over the network.
+                ***** `no custom span` == created span
+            **** _Example3_
 
-*Log correlation*: Parts of the tracing context (such as the trace identifier and the span identifier) can be populated to the logs of a given application.
-One can then collect all logs in a single storage and group them with a trace ID.
-That way, you can get all logs, for a single business operation (trace) from all services put in a chronological order.
+                Trace Id = X
+                Span Id = C
+                (custom span)
 
-*Latency analysis tools*: A tool that collects exported spans and visualizes the whole trace.
-Such a tool allows easy latency analysis.
-
-The following image shows how *Span* and *Trace* look in a system.
+                ***** `custom span` == you can create child spans manually
 
 image::tracing/trace-id.jpg[Trace Info propagation]
 
-Each color of a note signifies a span (there are seven spans - from *A* to *G*).
-Consider the following note:
 
-[source]
-----
-Trace Id = X
-Span Id = D
-Client Sent
-----
+* *Annotation/Event*
+    ** uses
+        *** record the existence of an event / in time
 
-This note indicates that the current span has *Trace Id* set to *X* and *Span Id* set to *D*.
-Also, from the RPC perspective, the `Client Sent` event took place.
+* *Tracer*
+    ** := library /
+        *** handles the lifecycle of a span
+            **** create spans
+            **** start spans
+            **** stop spans
+            **** report spans -- via reporters / exporters, to an -- external system
 
-Let's consider more notes:
+* *Tracing context*
+    ** == trace identifier + span identifier
+        *** must be propagated
+            **** through the process ( -- _Example:_ over threads --)
+            **** over the network
+    ** uses
+        *** make work distributed tracing
 
-[source]
-----
-Trace Id = X
-Span Id = A
-(no custom span)
+* *Log correlation*
+    ** == parts of the tracing context
+        *** _Example:_ trace identifier & span identifier
+    ** -- can be populated to the -- logs of a given application
+    ** uses
+        *** collect ALL logs | 1! storage &
+        *** group -- via a -- trace ID
 
-Trace Id = X
-Span Id = C
-(custom span)
-----
+* *Latency analysis tools*
+    ** := tool /
+        *** collects exported spans
+        *** visualizes the WHOLE trace
 
-You can continue with a created span (example with `no custom span` indication), or you can create child spans manually (example with `custom span` indication).
-
-The following image shows how the parent-child relationships of spans look:
-
-image::tracing/parents.jpg[Parent child relationship]
