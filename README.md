@@ -6,37 +6,43 @@
 [![Javadocs](https://www.javadoc.io/badge/io.micrometer/micrometer-tracing.svg)](https://www.javadoc.io/doc/io.micrometer/micrometer-tracing)
 [![Revved up by Develocity](https://img.shields.io/badge/Revved%20up%20by-Develocity-06A0CE?logo=Gradle&labelColor=02303A)](https://ge.micrometer.io/)
 
-A application tracing facade.
+* == application tracing facade
 
 ## Join the discussion
 
-Join the [Micrometer Slack](https://slack.micrometer.io) to share your questions, concerns, and feature requests.
+* [Micrometer Slack](https://slack.micrometer.io)
+  * Problems:
+    * Problem1: NOT active
+      * Note: Asked [here](https://github.com/micrometer-metrics/micrometer/issues/4411#issuecomment-2243490216)
 
 ## Snapshot builds
 
-Snapshots are published to `repo.spring.io` for every successful build on the `main` branch and maintenance branches.
+* published to `repo.spring.io` / every successful build | `main` branch & maintenance branches
+* Use
 
-To use:
-
-```groovy
-repositories {
-    maven { url 'https://repo.spring.io/snapshot' }
-}
-
-dependencies {
-    implementation 'io.micrometer:micrometer-tracing:latest.integration'
-}
-```
+    ```groovy
+    repositories {
+        maven { url 'https://repo.spring.io/snapshot' }
+    }
+    
+    dependencies {
+        implementation 'io.micrometer:micrometer-tracing:latest.integration'
+    }
+    ```
 
 ## Milestone releases
 
-Milestone releases are published to https://repo.spring.io/milestone. Include that as a maven repository in your build
-configuration to use milestone releases. Note that milestone releases are for testing purposes and are not intended for
-production use.
+* uses
+  * testing purposes
+    * NOT for production use 
+* https://repo.spring.io/milestone
+  * if you want to use milestone releases -> include it as a maven repository | your build configuration
+
 
 ## Documentation
 
-The documentation is available at https://docs.micrometer.io/tracing/reference/.
+* "/docs"
+* [URL](https://docs.micrometer.io/tracing/reference/)
 
 ## Contributing
 
