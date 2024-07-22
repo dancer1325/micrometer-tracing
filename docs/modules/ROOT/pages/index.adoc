@@ -64,4 +64,6 @@
     ** add a tracing bridge
         *** -> `micrometer-tracing` library -- is added -- transitively
         *** __Example:__ `micrometer-tracing-bridge-brave` or `micrometer-tracing-bridge-otel`
+            **** `micrometer-tracing-bridge-brave` -- Check in 'micrometer-tracing-bridges/micrometer-tracing-bridge-brave' --
+            **** `micrometer-tracing-bridge-otel` -- Check in 'micrometer-tracing-bridges/micrometer-tracing-bridge-otel' --
     ** span exporters / reporters
