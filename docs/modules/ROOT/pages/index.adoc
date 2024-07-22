@@ -5,57 +5,63 @@
 [[tracing-purpose]]
 == Purpose
 
-The problem of tracing is not new.
-Application developers have been creating ways to track the state of their applications for a long time.
-For much of that time, developers had to create the necessary tracing framework themselves.
+* problem of tracing
+* approaches
+    ** application developers have been creating the necessary tracing framework 👁️	themselves 👁️
+    ** https://github.com/spring-cloud/spring-cloud-sleuth[Spring Cloud Sleuth]
+        *** created in 2016, by the Spring Cloud team
+        *** origin of Micrometer Tracing project
+    ** Micrometer Tracing project
+        *** Spring-agnostic
+        *** == copy of Spring Cloud Sleuth
+        *** 1.0.0 GA release in November 2022
+        *** provides
+            **** simple facade -- for the -- most popular tracer libraries (== NO vendor lock-in)
+            **** -- tracing extension to -- Micrometer's `ObservationHandler`
+                ***** Whenever an `Observation` is used -> a corresponding span is
+                    ****** created,
+                    ****** started,
+                    ****** stopped
+                    ****** reported
+        *** design
+            **** add little / -- NO overhead to your -- tracing collection activity
+            **** maximize the portability
 
-In 2016, the Spring Cloud team created a tracing library that could help a lot of developers.
-It was called https://github.com/spring-cloud/spring-cloud-sleuth[Spring Cloud Sleuth].
-The Spring team realized that tracing could be separated from Spring Cloud and created the Micrometer Tracing project, which is, essentially, a Spring-agnostic copy of Spring Cloud Sleuth.
-Micrometer Tracing had its 1.0.0 GA release in November 2022 and has been getting steadily better ever since.
-
-https://github.com/micrometer-metrics/tracing[Micrometer Tracing] provides a simple facade for the most popular tracer libraries, letting you instrument your JVM-based application code without vendor lock-in.
-It is designed to add little to no overhead to your tracing collection activity while maximizing the portability of your tracing effort.
-
-It also provides a tracing extension to Micrometer's `ObservationHandler` (from Micrometer 1.10.0).
-Whenever an `Observation` is used, a corresponding span is created, started, stopped and reported.
 
 [[tracing-installing]]
 == Installing
 
-Micrometer Tracing comes with a Bill of Materials (BOM), which is a project that contains all the project versions for you.
+* via Bill of Materials (BOM)
+    ** == project / contains ALL
+    ** via
+        *** Gradle
 
-The following example shows the required dependency in Gradle:
+    implementation platform('io.micrometer:micrometer-tracing-bom:latest.release')
+    implementation 'io.micrometer:micrometer-tracing'
 
-[source,groovy,subs=+attributes]
-----
-implementation platform('io.micrometer:micrometer-tracing-bom:latest.release')
-implementation 'io.micrometer:micrometer-tracing'
-----
+        *** Maven
 
-The following example shows the required dependency in Maven:
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.micrometer</groupId>
+                <artifactId>micrometer-tracing-bom</artifactId>
+                <version>${micrometer-tracing.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
-[source,xml,subs=+attributes]
-----
-<dependencyManagement>
     <dependencies>
         <dependency>
-            <groupId>io.micrometer</groupId>
-            <artifactId>micrometer-tracing-bom</artifactId>
-            <version>${micrometer-tracing.version}</version>
-            <type>pom</type>
-            <scope>import</scope>
+          <groupId>io.micrometer</groupId>
+          <artifactId>micrometer-tracing</artifactId>
         </dependency>
     </dependencies>
-</dependencyManagement>
 
-<dependencies>
-    <dependency>
-      <groupId>io.micrometer</groupId>
-      <artifactId>micrometer-tracing</artifactId>
-    </dependency>
-</dependencies>
-----
-
-You should add a tracing bridge, such as `micrometer-tracing-bridge-brave` or `micrometer-tracing-bridge-otel` and span exporters / reporters.
-When you add a bridge, the `micrometer-tracing` library is added transitively.
+* recommendations
+    ** add a tracing bridge
+        *** -> `micrometer-tracing` library -- is added -- transitively
+        *** __Example:__ `micrometer-tracing-bridge-brave` or `micrometer-tracing-bridge-otel`
+    ** span exporters / reporters
