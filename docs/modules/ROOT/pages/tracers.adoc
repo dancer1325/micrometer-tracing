@@ -1,45 +1,36 @@
-= Supported Tracers
-
-Micrometer Tracing supports the following Tracers.
+= Supported Tracers, by Micrometer Tracing
 
 * https://github.com/openzipkin/brave[*OpenZipkin Brave*]
 * https://opentelemetry.io/[*OpenTelemetry*]
 
 == Installing
 
-The following example shows the required dependency in Gradle (assuming that the Micrometer Tracing BOM has been added):
+* prerequisites
+    ** xref:index.adoc[Micrometer Tracing BOM already added]
+* via
+    ** Gradle
+        *** Brave Tracer
 
-.Brave Tracer
-[source,groovy,subs=+attributes]
-----
-implementation 'io.micrometer:micrometer-tracing-bridge-brave'
-----
+            implementation 'io.micrometer:micrometer-tracing-bridge-brave'
 
-.OpenTelemetry Tracer
-[source,groovy,subs=+attributes]
-----
-implementation 'io.micrometer:micrometer-tracing-bridge-otel'
-----
+        *** OpenTelemetry Tracer
 
-The following example shows the required dependency in Maven (assuming that the Micrometer Tracing BOM has been added):
+            implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+    ** Maven
+        *** Brave Tracer
 
-.Brave Tracer
-[source,xml,subs=+attributes]
-----
-<dependency>
-    <groupId>io.micrometer</groupId>
-    <artifactId>micrometer-tracing-bridge-brave</artifactId>
-</dependency>
-----
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-brave</artifactId>
+        </dependency>
 
-.OpenTelemetry Tracer
-[source,xml,subs=+attributes]
-----
-<dependency>
-    <groupId>io.micrometer</groupId>
-    <artifactId>micrometer-tracing-bridge-otel</artifactId>
-</dependency>
-----
+        *** OpenTelemetry Tracer
 
-IMPORTANT: Remember to pick *only one* bridge.
-You *should not have* two bridges on the classpath.
+        <dependency>
+            <groupId>io.micrometer</groupId>
+            <artifactId>micrometer-tracing-bridge-otel</artifactId>
+        </dependency>
+
+== Notes
+
+* JUST pick *1!* bridge
