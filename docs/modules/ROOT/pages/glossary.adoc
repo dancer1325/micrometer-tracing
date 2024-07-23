@@ -19,7 +19,7 @@
             *** process IDs (normally IP addresses)
         ** can be
             *** started
-                **** once you create & start -> you must stop | some point in the future
+                **** once you create & start -> ⚠️you must stop | some point in the future ⚠️
             *** stopped
         ** uses
             *** keep track of their timing information
