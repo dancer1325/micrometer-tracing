@@ -1,24 +1,27 @@
 = Using Micrometer Tracing Directly
 
-In this section, we describe how to use the Micrometer Tracing API to directly create and report spans.
+* Goal
+    ** how to use the Micrometer Tracing API -- to --
+        *** create spans
+        *** report spans
 
 == Micrometer Tracing Examples
 
-The following example shows the basic operations on a span. Read the comments in the snippet for details:
+* basic operations | a span
 
 [source,java,subs=+attributes]
 -----
 include::{include-java}/tracing/TracingApiTests.java[tags=manual_span_creation,indent=0]
 -----
 
-The following example shows how to continue a span in a new thread that was started in another thread:
+* how to continue a span | new thread ( ==  != thread / was started)
 
 [source,java,subs=+attributes]
 -----
 include::{include-java}/tracing/TracingApiTests.java[tags=manual_span_continuation,indent=0]
 -----
 
-The following example shows how to create a child span when explicitly knowing who the parent span is:
+* if explicitly know who the parent span is -> how to create a child span
 
 [source,java,subs=+attributes]
 -----

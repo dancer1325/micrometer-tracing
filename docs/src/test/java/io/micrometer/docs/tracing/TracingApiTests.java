@@ -117,23 +117,21 @@ class TracingApiTests {
             String taxValue = "10";
 
             // tag::manual_span_creation[]
-            // Create a span. If there was a span present in this thread it will become
-            // the `newSpan`'s parent.
+            // Create a span. If there was a span | this thread ->  it -- will become -- the `newSpan`'s parent.
             Span newSpan = this.tracer.nextSpan().name("calculateTax");
-            // Start a span and put it in scope. Putting in scope means putting the span
-            // in thread local
-            // and, if configured, adjust the MDC to contain tracing information
+            // Start a span and put it in scope
+            // Putting in scope ==
+            // 1. putting the span | thread local (TODO: Where is that indicated?)
+            // 2. if configured -> adjust the MDC / contain tracing information
             try (Tracer.SpanInScope ws = this.tracer.withSpan(newSpan.start())) {
-                // ...
-                // You can tag a span - put a key value pair on it for better debugging
+                // tag a span == key/value pair -- for -- better debugging
                 newSpan.tag("taxValue", taxValue);
-                // ...
-                // You can log an event on a span - an event is an annotated timestamp
+                // log an event | span == annotated timestamp
                 newSpan.event("taxCalculated");
             }
             finally {
-                // Once done remember to end the span. This will allow collecting
-                // the span to send it to a distributed tracing system e.g. Zipkin
+                // Once done -> required to end up the span
+                //  -> allow collecting the span & send it to a distributed tracing system -- Example: Zipkin --
                 newSpan.end();
             }
             // end::manual_span_creation[]
@@ -146,6 +144,7 @@ class TracingApiTests {
             // tag::manual_span_continuation[]
             Span spanFromThreadX = this.tracer.nextSpan().name("calculateTax");
             try (Tracer.SpanInScope ws = this.tracer.withSpan(spanFromThreadX.start())) {
+                // TODO: Check from here
                 executorService.submit(() -> {
                     // Pass the span from thread X
                     Span continuedSpan = spanFromThreadX;
