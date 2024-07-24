@@ -30,9 +30,8 @@ include::{include-java}/tracing/TracingApiTests.java[tags=manual_span_joining,in
 
 == Micrometer Tracing Brave Setup
 
-In this subsection, we set up Micrometer Tracing with Brave.
-
-The following example shows how to create a Micrometer Tracing `Tracer` by using Brave components that would send completed spans to Zipkin:
+* set up Micrometer Tracing + Brave.
+    ** _Example:_ how to create a Micrometer Tracing `Tracer` -- via -- Brave components / send completed spans to Zipkin:
 
 [source,java,subs=+attributes]
 -----
@@ -41,9 +40,8 @@ include::{include-java}/tracing/TracingApiTests.java[tags=brave_setup,indent=0]
 
 == Micrometer Tracing OpenTelemetry Setup
 
-In this subsection, we set up Micrometer Tracing with OpenTelemetry (OTel).
-
-The following example shows how to create a Micrometer Tracing `Tracer` by using OTel components that would send completed spans to Zipkin:
+* set up Micrometer Tracing + OpenTelemetry (OTel).
+    ** _Example:_ how to create a Micrometer Tracing `Tracer` -- via -- OTel components / send completed spans to Zipkin:
 
 [source,java,subs=+attributes]
 -----
@@ -52,15 +50,20 @@ include::{include-java}/tracing/TracingApiTests.java[tags=otel_setup,indent=0]
 
 == Micrometer Tracing Baggage API
 
-Traces connect from application to application by using header propagation. Besides trace identifiers, other properties (called `Baggage`) can also be passed along with the request.
-
-The following example shows how to use the Tracer API to create and extract baggage:
+* Traces connect application -- to -- application
+    ** -- via -- header propagation
+    ** passing along with the request
+        *** trace identifiers
+        *** `Baggage`
+            **** == other properties
+* _Example:_ how to create and extract baggage -- via -- Tracer API
 
 [source,java,subs=+attributes]
 -----
 include::{include-bridges-java}/micrometer-tracing-bridge-brave/src/test/java/io/micrometer/tracing/brave/bridge/BraveTracingApiTests.java[tags=baggage_api,indent=0]
 -----
 
+* TODO: Check from here
 IMPORTANT: For Brave, remember to set up the `PropagationFactory` so that it contains the baggage fields that you will be using in your code. Check the following example for details:
 
 [source,java,subs=+attributes]
