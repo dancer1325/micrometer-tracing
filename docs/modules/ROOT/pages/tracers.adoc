@@ -16,6 +16,7 @@
         *** OpenTelemetry Tracer
 
             implementation 'io.micrometer:micrometer-tracing-bridge-otel'
+
     ** Maven
         *** Brave Tracer
 
