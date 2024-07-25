@@ -220,6 +220,7 @@ class BraveTracingApiTests {
     @Test
     void should_work_with_baggage() {
         // tag::baggage_api[]
+        // TODO: Check
         Span span = tracer.nextSpan().name("parent").start();
 
         // Assuming that there's a span in scope...

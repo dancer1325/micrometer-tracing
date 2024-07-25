@@ -59,6 +59,7 @@ class TracingApiTests {
     class BraveTests {
 
         // tag::brave_setup[]
+        // TODO: Check in the origin source code of Brave
         // [Brave component] Example of using a SpanHandler. SpanHandler is a component
         // that gets called when a span is finished. Here we have an example of setting it
         // up with sending spans
@@ -144,15 +145,12 @@ class TracingApiTests {
             // tag::manual_span_continuation[]
             Span spanFromThreadX = this.tracer.nextSpan().name("calculateTax");
             try (Tracer.SpanInScope ws = this.tracer.withSpan(spanFromThreadX.start())) {
-                // TODO: Check from here
                 executorService.submit(() -> {
                     // Pass the span from thread X
                     Span continuedSpan = spanFromThreadX;
-                    // ...
-                    // You can tag a span
+                    // tag a span
                     continuedSpan.tag("taxValue", taxValue);
-                    // ...
-                    // You can log an event on a span
+                    // log an event | span
                     continuedSpan.event("taxCalculated");
                 }).get();
             }
@@ -176,15 +174,13 @@ class TracingApiTests {
                 // the `initialSpan` from thread X. `initialSpan` will be the parent
                 // of the `newSpan`
                 Span newSpan = this.tracer.nextSpan(initialSpan).name("calculateCommission");
-                // ...
-                // You can tag a span
+                // tag a span
                 newSpan.tag("commissionValue", commissionValue);
-                // ...
-                // You can log an event on a span
+                // log an event | span
                 newSpan.event("commissionCalculated");
-                // Once done remember to end the span. This will allow collecting
-                // the span to send it to e.g. Zipkin. The tags and events set on the
-                // newSpan will not be present on the parent
+                // Once done -> required to end up the span
+                //  -> allow collecting the span & send it to a distributed tracing system -- Example: Zipkin --
+                // tags and events || newSpan -- will NOT be present -- | parent
                 newSpan.end();
                 // end::manual_span_joining[]
             }).get();
@@ -198,6 +194,7 @@ class TracingApiTests {
     class OtelTests {
 
         // tag::otel_setup[]
+        // TODO: Check in the origin source code of Otel
         // [OTel component] Example of using a SpanExporter. SpanExporter is a component
         // that gets called when a span is finished. Here we have an example of setting it
         // up with sending spans
